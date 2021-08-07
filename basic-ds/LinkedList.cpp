@@ -2,10 +2,15 @@
 using namespace std;
 
 class Node {
-public:
-    int data;
-    Node* next;
-public:
+    public:
+        int data;
+        Node* next;
+  
+        Node(int data)
+        {
+            this->data = data;
+            next = NULL;
+        }
     
 };
  
@@ -56,50 +61,53 @@ int maxNumber(Node *p)
     }
     return max;
 }
+
+void insertAthead(Node* &head, int data)
+{
+    if(head == NULL)
+    {
+        head = new Node(data);
+        return;
+    }
+    Node *n = new Node(data);
+    n->data = data;
+    n->next = head;
+    head = n;
+
+}
+
+void insertAtposition(Node* head, int data, int pos)
+{
+    if(pos == 0)
+    {
+        insertAthead(head, data);
+    } else {
+
+    
+    Node* temp = head;
+    for (int i = 0; i < pos -1 ; i++)
+    {
+        temp = temp->next;
+    }
+
+    Node* n = new Node(data);
+    n->next = temp->next;
+    temp->next = n;
+    }
+
+}
  
 
 int main()
 {
     Node* head = NULL;
-    Node* second = NULL;
-    Node* third = NULL;
- 
-    // allocate 3 nodes in the heap
-    head = new Node();
-    second = new Node();
-    third = new Node();
- 
-    head->data = 1; // assign data in first node
-    head->next = second; // Link first node with second
- 
-    second->data = 2; // assign data to second node
-    second->next = third;
- 
-    third->data = 3; // assign data to third node
-    third->next = NULL;
- 
-    // printList(head);
-    //  cout << count(head);
-    //  cout << sum(head);
-    //  cout << maxNumber(head);
-
-    // inserting a node before first node of LL O(1)
-    Node *befFirst = new Node();
-    befFirst->data = 15;
-    befFirst->next = head;
-    head = befFirst;
-    // end 
-
-    // inserting a node after given node  of LL
-    Node *befFirst = new Node();
-    befFirst->data = 15;
-    befFirst->next = head;
-    head = befFirst;
-    // end 
-
-    cout << maxNumber(head);
-
- 
+    
+    insertAthead(head, 56);
+    insertAthead(head, 57);
+    insertAthead(head, 58);
+    insertAtposition(head, 100,2);
+    printList(head);
+   
     return 0;
 }
 
