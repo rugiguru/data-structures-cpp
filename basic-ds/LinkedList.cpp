@@ -19,9 +19,10 @@ class Node {
 void printList(Node* n)
 {
     while (n != NULL) {
-        cout << n->data << " ";
+        cout << n->data << "-->";
         n = n->next;
     }
+    cout << endl;
 }
 
 // this functions counts 
@@ -81,20 +82,88 @@ void insertAtposition(Node* head, int data, int pos)
     if(pos == 0)
     {
         insertAthead(head, data);
-    } else {
+    } 
+    else {
+        Node* temp = head;
+        for (int i = 0; i < pos -1 ; i++)
+        {
+            temp = temp->next;
+        }
 
-    
-    Node* temp = head;
-    for (int i = 0; i < pos -1 ; i++)
+        Node* n = new Node(data);
+        n->next = temp->next;
+        temp->next = n;
+    }
+}
+
+// space => O(n) , time=> O(n)
+Node* recursiveReverse(Node* head)
+{
+    // base case
+    if(head == NULL || head->next == NULL)
     {
-        temp = temp->next;
+        return head;
     }
 
-    Node* n = new Node(data);
-    n->next = temp->next;
-    temp->next = n;
+    Node* smallHead = recursiveReverse(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return smallHead;
+}
+
+// space => O(1) , time=> O(n)
+void iterativeReverse(Node* &head)
+{
+    Node* prev = NULL;
+    Node* current = head;
+    Node* temp;
+
+    while(current != NULL)
+    {
+        // store next6 addr
+        temp = current->next;
+        // update current
+        current->next = prev;
+
+        prev = current;
+        current = temp;
+    }
+    head = prev;
+    return;
+}
+
+
+Node* kReverse(Node* head, int k)
+{
+    // base case
+    if(head == NULL)
+    {
+        return head;
     }
 
+    Node* prev = NULL;
+    Node* current = head;
+    Node* temp;
+    int cnt = 1;
+
+    while(current != NULL and cnt <= k)
+    {
+        // store next6 addr
+        temp = current->next;
+        // update current
+        current->next = prev;
+
+        prev = current;
+        current = temp;
+        cnt++;
+    }
+
+    if(temp !=NULL)
+    {
+        head->next = kReverse(temp,k);
+    }
+
+    return prev;
 }
  
 
@@ -105,9 +174,16 @@ int main()
     insertAthead(head, 56);
     insertAthead(head, 57);
     insertAthead(head, 58);
-    insertAtposition(head, 100,2);
+    insertAthead(head, 59);
+    insertAthead(head, 60);
+    insertAthead(head, 61);
+    insertAthead(head, 62);
+    // insertAtposition(head, 100,2);
     printList(head);
-   
+    // head = recursiveReverse(head);
+    // iterativeReverse(head);.
+    head = kReverse(head, 3);
+    printList(head);
     return 0;
 }
 
