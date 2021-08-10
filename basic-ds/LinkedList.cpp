@@ -190,8 +190,43 @@ Node* merge(Node*a, Node* b)
         c = b;
         c->next = merge(a, b->next);
     }
-
     return c;
+}
+
+Node * midPoint(Node *head)
+{
+    Node *slow =head;
+    Node *fast = head->next;
+
+    while (fast != NULL and fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow; 
+}
+
+
+Node * mergeSort(Node *head)
+{
+    if(head == NULL or head->next == NULL)
+    {
+        return head;
+    }
+
+    // rec case
+    Node *mid = midPoint(head);
+
+    Node *a = head;
+    Node *b = mid->next;
+    mid->next = NULL;
+
+    // Recursive Sort 
+    a = mergeSort(a);
+    b = mergeSort(b);
+
+    return merge(a,b);
+    
 }
  
 
@@ -206,33 +241,51 @@ int main()
     // insertAthead(head, 60);
     // insertAthead(head, 61);
     // insertAthead(head, 62);
-    // // insertAtposition(head, 100,2);
+    // insertAtposition(head, 100,2);
     // printList(head);
-    // // head = recursiveReverse(head);
-    // // iterativeReverse(head);.
+    // head = recursiveReverse(head);
+    // iterativeReverse(head);.
     // head = kReverse(head, 3);
+
+
     // printList(head);
 
 
     // for testing merge
+    // Node * a = NULL;
+    // insertAthead(a, 10);
+    // insertAthead(a, 7);
+    // insertAthead(a, 5);
+    // insertAthead(a, 1);
 
-    Node * a = NULL;
-    insertAthead(a, 10);
-    insertAthead(a, 7);
-    insertAthead(a, 5);
-    insertAthead(a, 1);
+    // Node* b = NULL;
+    // insertAthead(b, 6);
+    // insertAthead(b, 3);
+    // insertAthead(b, 2);
+    // Node * head = merge(a,b);
+    // printList(head);
+    // end
 
-    Node* b = NULL;
-    insertAthead(b, 6);
-    insertAthead(b, 3);
-    insertAthead(b, 2);
 
-    Node * head = merge(a,b);
+    // *Merge sort test*//
+
+    Node* head = NULL;
+    
+    insertAthead(head, 10);
+    insertAthead(head, 5);
+   
+    insertAthead(head, 6);
+    insertAthead(head, 3);
+    insertAthead(head, 8);
+    insertAthead(head, 1);
+
+    printList(head); 
+
+    mergeSort(head);
 
     printList(head);
 
-
-    // end
+    // *End*//
     return 0;
 }
 
