@@ -165,25 +165,74 @@ Node* kReverse(Node* head, int k)
 
     return prev;
 }
+
+
+Node* merge(Node*a, Node* b)
+{
+    if(a == NULL){
+        return b;
+    }
+
+    if(b == NULL)
+    {
+        return a;
+    }
+
+    Node* c;
+
+    if(a->data < b->data)
+    {
+        c = a;
+        c->next = merge(a->next, b);
+    }
+    else
+    {
+        c = b;
+        c->next = merge(a, b->next);
+    }
+
+    return c;
+}
  
 
 int main()
 {
-    Node* head = NULL;
+    // Node* head = NULL;
     
-    insertAthead(head, 56);
-    insertAthead(head, 57);
-    insertAthead(head, 58);
-    insertAthead(head, 59);
-    insertAthead(head, 60);
-    insertAthead(head, 61);
-    insertAthead(head, 62);
-    // insertAtposition(head, 100,2);
+    // insertAthead(head, 56);
+    // insertAthead(head, 57);
+    // insertAthead(head, 58);
+    // insertAthead(head, 59);
+    // insertAthead(head, 60);
+    // insertAthead(head, 61);
+    // insertAthead(head, 62);
+    // // insertAtposition(head, 100,2);
+    // printList(head);
+    // // head = recursiveReverse(head);
+    // // iterativeReverse(head);.
+    // head = kReverse(head, 3);
+    // printList(head);
+
+
+    // for testing merge
+
+    Node * a = NULL;
+    insertAthead(a, 10);
+    insertAthead(a, 7);
+    insertAthead(a, 5);
+    insertAthead(a, 1);
+
+    Node* b = NULL;
+    insertAthead(b, 6);
+    insertAthead(b, 3);
+    insertAthead(b, 2);
+
+    Node * head = merge(a,b);
+
     printList(head);
-    // head = recursiveReverse(head);
-    // iterativeReverse(head);.
-    head = kReverse(head, 3);
-    printList(head);
+
+
+    // end
     return 0;
 }
 
