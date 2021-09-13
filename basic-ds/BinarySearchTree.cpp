@@ -68,6 +68,33 @@ void printInorder(Node *root)
     printInorder(root->right);
 }
 
+// Challenge : print all elements of BSt which lie in the range k1 and k2
+
+void printRange(Node *root, int k1, int k2)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+
+    if(root->key >= k1 and root->key <= k2)
+    {
+        printRange(root->left, k1, k2);
+        cout << root->key << " ";
+        printRange(root->right, k1, k2);
+    } 
+    else if(root->key > k2)
+    {
+         printRange(root->left, k1, k2);
+    } 
+    else 
+    {
+         printRange(root->right, k1, k2);
+    }
+
+   
+}
+
 int main(int argc, char const *argv[])
 {
    
@@ -79,9 +106,11 @@ int main(int argc, char const *argv[])
        root = insert(root, x);
    }
 
-   printInorder(root);
+//    printInorder(root);
+
+   printRange(root, 1, 6);
 
 
-   cout << search(root, 11) << endl;
+// cout << search(root, 11) << endl;
 
 }
